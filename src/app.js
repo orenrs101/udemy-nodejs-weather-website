@@ -6,6 +6,8 @@ const hbs = require('hbs');
 
 //Starting express
 const app = express();
+const port = process.env.PORT || 3000; //process.env - lets us access enviroment variables such as the PORT that heroku provides
+//^^On heroku we will have process.env.PORT, but locally we won't have so we do a fallback to 3000
 
 //Define paths for express config
 const publicDirectoryPath = path.join(__dirname, '../public');
@@ -104,6 +106,6 @@ app.get('*', (req, res) => {
 });
 
 //Start up the server
-app.listen(3000, () => {
-    console.log('Server is up on port 3000.');
+app.listen(port, () => {
+    console.log('Server is up on port: ', port);
 });
