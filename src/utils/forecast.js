@@ -14,7 +14,8 @@ const getForecast = (latitude, longitude, callback) => {
             callback(undefined, {
                 description: currentForecast.weather_descriptions[0],
                 temperature: currentForecast.temperature,
-                feelslike: currentForecast.feelslike
+                feelslike: currentForecast.feelslike,
+                humidity: body.current.humidity
             });
         }
     });
