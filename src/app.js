@@ -1,5 +1,6 @@
-const geocodeUtils = require('./utils/geocode.js');
+const geocode = require('./utils/geocode');
 const forecastUtils = require('./utils/forecast.js');
+
 const path = require('path');
 const express = require('express');
 const hbs = require('hbs');
@@ -53,14 +54,14 @@ app.get('/weather', (req, res) => {
         });
     }
 
-    geocodeUtils.geocode(req.query.address, (geocodeError, { latitude, longitude, location } = {}) => {
+    geocode.geocode(req.query.address, (geocodeError, { latitude, longitude, location } = {}) => {
         if(geocodeError) {
             return res.send({
                 error: 'GEO Error:' + geocodeError
             });
         }
 
-        forecastUtils.getForecast(latitude, longitude, (forecastError, { description, temperature, feelslike } = {})=> {
+        forecastUtils.getForecast(latitude, longitude, (forecastError, { description, temperature, feelslike, humidity } = {})=> {
             if(forecastError) {
                 return res.send({
                     error: 'Forecast error: ' + forecastError
@@ -68,7 +69,7 @@ app.get('/weather', (req, res) => {
             }
             return res.send({
                 location: location,
-                forecast: description + ". Temperature is: " + temperature + ", But feels like: " + feelslike
+                forecast: description + ". Temperature is: " + temperature + ", But feels like: " + feelslike + ". humidity is " + humidity
             });
         });
     });
